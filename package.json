@@ -1,10 +1,10 @@
 {
   "name": "isomorphic-omniscient-example",
   "version": "1.0.0",
-  "description": "Simple example of how to do isomorphic applications using Omniscient and React",
+  "description": "Small example of how to do isomorphic applications using Omniscient and React",
   "main": "server.js",
   "scripts": {
-    "build": "browserify browser/main.js -o public/build.js"
+    "build": "browserify -t [ reactify --es6 ] -- browser/main.js > public/build.js"
   },
   "author": "Mikael Brevik <mikaelbre@gmail.com>",
   "license": "MIT",
@@ -14,11 +14,6 @@
     "omniscient": "^2.0.0",
     "react": "^0.12.0",
     "st": "^0.5.2"
-  },
-  "browserify": {
-    "transform": [
-      ["reactify", {"es6": true}]
-    ]
   },
   "devDependencies": {
     "browserify": "^6.2.0",

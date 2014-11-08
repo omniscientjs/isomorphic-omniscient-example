@@ -16,8 +16,5 @@ render();
 structure.on('swap', render);
 
 setTimeout(function () {
-  console.log("Hello");
-  structure.cursor('name').update(function () {
-    return 'The Doctor';
-  });
+  structure.cursor('name').update(() => 'The Doctor');
 }, 5000);

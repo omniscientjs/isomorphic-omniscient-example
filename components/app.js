@@ -1,27 +1,23 @@
 var React = require('react'),
     component = require('omniscient');
 
-var Greeting = component(function (props) {
+var Greeting = component(function ({ name }) {
+  return <h2>Welcome, {name.deref()}</h2>
+}).jsx;
+
+var Input = component(function ({ name }) {
+  var onChange = (e) => name.update(() => e.currentTarget.value);
   return (
-    <h2>Welcome, {props.name.deref()}</h2>
+    <input onChange={onChange} value={name.deref()} />
   );
 }).jsx;
 
-var Input = component(function (props) {
-  var onChange = (e) => this.props.name.update(() => e.currentTarget.value);
+var App = module.exports = component(function ({ appState }) {
   return (
-    <input onChange={onChange} value={props.name.deref()} />
-  );
-}).jsx;
-
-var App = component(function (props) {
-  return (
-    <div>
+    <main>
       <h1>Isomorphic Omniscient!</h1>
-      <Greeting name={props.appState.cursor('name')} />
-      <Input name={props.appState.cursor('name')} />
-    </div>
+      <Greeting name={appState.cursor('name')} />
+      <Input name={appState.cursor('name')} />
+    </main>
   );
 });
-
-module.exports = App;

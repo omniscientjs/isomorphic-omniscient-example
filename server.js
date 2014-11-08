@@ -27,23 +27,16 @@ var structure = immstruct({
 var tpl = fs.readFileSync('./view/layout.tpl.html').toString('utf-8');
 
 var server = http.createServer(function (req, res) {
-  if (req.url === '/') {
-    // Render React to a string, passing in our fetched tweets
-    var markup = React.renderToString(
-      App({ appState: structure.cursor() })
-    );
-    res.writeHead(200, {
-      'Content-type': 'text/html'
-    });
+  if (req.url !== '/') return mount(req, res);
 
-    res.write(
-      tpl.replace('{{initialApp}}', markup)
-         .replace('{{initialState}}', JSON.stringify(structure.current.toJSON()))
-    );
-    return res.end();
-  }
+  // Render React to a string, passing in our fetched tweets
+  var markup = React.renderToString(App({ appState: structure.cursor() }));
 
-  return mount(req, res);
+  res.writeHead(200, { 'Content-type': 'text/html' });
+  res.end(
+    tpl.replace('{{initialApp}}', markup)
+       .replace('{{initialState}}', JSON.stringify(structure.current.toJSON()))
+  );
 });
 
 server.listen(8000, function () {
